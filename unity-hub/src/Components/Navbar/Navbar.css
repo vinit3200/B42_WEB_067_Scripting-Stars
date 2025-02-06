@@ -1,0 +1,33 @@
+.navbar {
+    background-color: #fff;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+  }
+  
+  .nav-links a, .create-group {
+    margin: 5px 10px;
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .create-group {
+    background-color: #6a1b9a;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  @media (max-width: 768px) {
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+  }

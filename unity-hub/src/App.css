@@ -1,0 +1,24 @@
+.app {
+  font-family: Arial, sans-serif;
+  padding: 10px;
+}
+
+.content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.posts {
+  flex: 2 1 60%;
+}
+
+.poll {
+  flex: 1 1 35%;
+}
+
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+}
