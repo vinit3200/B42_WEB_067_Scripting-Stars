@@ -3,6 +3,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const connectDB = require('./config/db');
+const cors = require("cors");
 
 const authRoutes = require('./routes/authRoutes');
 const communityRoutes = require('./routes/communityRoutes');
@@ -18,6 +19,7 @@ connectDB();
 
 // Middleware
 app.use(express.json());
+app.use(cors());
 
 // Routes
 app.use('/user', authRoutes);
