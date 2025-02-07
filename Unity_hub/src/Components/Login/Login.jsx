@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import './Login.css'; 
+import { useNavigate } from "react-router-dom";
+import styles from "./Login.module.css"; // Importing CSS Module
 
-const RegistrationForm = () => {
+const RegistrationForm = ({ setUser }) => {
+    const navigate = useNavigate();
     const [isSignIn, setIsSignIn] = useState(true);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [data, setData] = useState({
@@ -39,44 +41,40 @@ const RegistrationForm = () => {
 
             if (res.ok) {
                 const result = await res.json();
-                alert(`${isSignIn ? "Login" : "Signup"} successfully 😉! User ID ${result.username}`);
-                setData({
-                    username: "",
-                    email: "",
-                    password: "",
-                });
+                alert(`${isSignIn ? "Login" : "Signup"} successful!`);
+                setUser(result);  // Update user state
+                navigate("/"); // Redirect to home
             } else {
-                alert(`${isSignIn ? "Login" : "Signup"} Failed. Try Again 🙁`);
+                alert("Login Failed. Try Again.");
             }
         } catch (error) {
-            alert("Error occurred during signup 😕");
+            alert("Error occurred during login.");
         }
     };
 
     return (
-        <div className={`container ${isSignIn ? "log-in" : "sign-up"}`}>
-            <div className="box">
-                <div className="container-forms">
+        <div className={`${styles.container} ${isSignIn ? styles["log-in"] : styles["sign-up"]}`}>
+            <div className={styles.box}>
+                <div className={styles["container-forms"]}>
                     {/* Toggle between Sign In and Sign Up */}
-                    <div className="form-toggle">
+                    <div className={styles["form-toggle"]}>
                         <button
-                            className={`toggle-btn ${isSignIn ? "active" : ""}`}
+                            className={`${styles["toggle-btn"]} ${isSignIn ? styles.active : ""}`}
                             onClick={() => setIsSignIn(true)}
                         >
                             Sign In
                         </button>
                         <button
-                            className={`toggle-btn ${!isSignIn ? "active" : ""}`}
+                            className={`${styles["toggle-btn"]} ${!isSignIn ? styles.active : ""}`}
                             onClick={() => setIsSignIn(false)}
                         >
                             Sign Up
                         </button>
                     </div>
 
-                    <div className="container-form">
-                        <div className={`form-item ${isSignIn ? "log-in" : "sign-up"}`}>
+                    <div className={styles["container-form"]}>
+                        <div className={`${styles["form-item"]} ${isSignIn ? styles["log-in"] : styles["sign-up"]}`}>
                             <form onSubmit={handleSubmit}>
-                                {/* Only show this for signup */}
                                 {!isSignIn && (
                                     <div>
                                         <label htmlFor="username"></label>
@@ -103,7 +101,7 @@ const RegistrationForm = () => {
                                     />
                                 </div>
 
-                                <div className="password-input-container">
+                                <div className={styles["password-input-container"]}>
                                     <label htmlFor="password"></label>
                                     <input
                                         type={passwordVisible ? "text" : "password"}
@@ -117,11 +115,11 @@ const RegistrationForm = () => {
                                         type="button"
                                         onClick={() => setPasswordVisible(!passwordVisible)}
                                     >
-                                        {passwordVisible ? "😎" : "🙄"}
+                                        {passwordVisible ? "🧐" : "😎"}
                                     </button>
                                 </div>
 
-                                <button type="submit" className="password-toggle">
+                                <button type="submit" className={styles["password-toggle"]}>
                                     {isSignIn ? "Log In" : "Register New Account"}
                                 </button>
                             </form>
