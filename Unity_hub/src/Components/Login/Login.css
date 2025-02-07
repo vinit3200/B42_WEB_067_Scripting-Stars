@@ -1,0 +1,157 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient(to right, #2575fc, #6a11cb);
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* Main container */
+.container {
+    width: 400px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Form sections (Login & Signup) stacked vertically */
+.container-forms {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Partitioning: Login on Top, Signup Below */
+.container-form {
+    width: 100%;
+    padding: 20px;
+    transition: all 0.3s ease;
+}
+
+/* Active section styling */
+.log-in .sign-up-section,
+.sign-up .log-in-section {
+    filter: blur(3px);
+    opacity: 0.5;
+    transition: 0.3s ease-in-out;
+}
+
+/* Form sections */
+.log-in-section, .sign-up-section {
+    width: 100%;
+    padding: 20px;
+    border-bottom: 2px solid #ddd;
+}
+
+/* Input fields */
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Password input */
+.password-input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.password-input-container input {
+    flex: 1;
+}
+
+.password-input-container button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Buttons */
+.btn, .password-toggle {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.btn {
+    background: #007bff;
+    color: white;
+}
+
+.password-toggle {
+    background: #ff4081;
+    color: white;
+}
+
+.btn:hover, .password-toggle:hover {
+    opacity: 0.8;
+}
+
+/* Toggle buttons for Sign In and Sign Up */
+.form-toggle {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.toggle-btn {
+    width: 48%;
+    padding: 12px;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+    font-size: 16px;
+    background: #fff;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.toggle-btn.active {
+    background: #007bff;
+    color: white;
+}
+
+.toggle-btn:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+    
+    h2 {
+        font-size: 22px;
+    }
+    
+    input {
+        font-size: 14px;
+    }
+    
+    .btn, .password-toggle {
+        font-size: 16px;
+    }
+
+    .toggle-btn {
+        font-size: 14px;
+    }
+}
