@@ -1,17 +1,20 @@
-const redis = require('redis');
-const dotenv = require('dotenv');
+const redis = require("redis");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
+// ✅ Create Redis client for Cloud (Upstash, AWS, etc.)
 const redisClient = redis.createClient({
+  url: process.env.REDIS_URL,
   socket: {
-    host: process.env.REDIS_HOST || '127.0.0.1',
-    port: process.env.REDIS_PORT || 6379,
+    tls: true, // Enables secure connection
   },
 });
 
-redisClient.connect()
-  .then(() => console.log('Connected to Redis'))
-  .catch(err => console.error('Redis connection error:', err));
+// ✅ Connect to Redis Cloud
+redisClient
+  .connect()
+  .then(() => console.log("✅ Connected to Redis Cloud"))
+  .catch((err) => console.error("❌ Redis connection error:", err));
 
 module.exports = redisClient;
