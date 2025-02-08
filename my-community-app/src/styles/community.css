@@ -1,0 +1,65 @@
+/* Main Sections */
+.community-links, .communities, .recommended-communities {
+    background: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 33.33vw;
+    height: 100vh;
+    /* transition: transform 0.3s ease-in-out; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 30px;
+}
+
+/* Headings & Dividers */
+h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+hr {
+    border: 1px solid #3498db;
+    width: 80%;
+    margin-bottom: 20px;
+}
+
+/* Community Buttons */
+.community-btn {
+    display: block;
+    width: 70%;
+    padding: 12px;
+    margin: 10px auto;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.community-btn:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+    }
+    .community-links, .communities, .recommended-communities {
+        width: 100vw;
+        height: auto;
+        padding-top: 30px;
+    }
+}
+
+
+
+

@@ -1,0 +1,88 @@
+.community-links, .communities, .recommended-communities {
+    background: white;
+    padding: 20px;
+    border-radius: 0; /* Removes any rounding on the edges */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 33.33vw; /* Each section takes exactly 1/3 of the screen */
+    height: 100vh; /* Full height */
+    transition: transform 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centers content horizontally */
+    justify-content: flex-start; /* Aligns content at the top */
+    padding-top: 30px; /* Adds spacing from the top */
+  }
+  
+  .community-links:hover, .communities:hover, .recommended-communities:hover {
+    transform: translateY(-5px);
+  }
+  
+  h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  hr {
+    border: 1px solid #3498db;
+    width: 80%;
+    margin-bottom: 20px;
+  }
+  
+  .community-btn {
+    display: block;
+    width: 70%;
+    padding: 12px;
+    margin: 10px auto;
+    border: none;
+    background: #3498db;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .community-btn:hover {
+    background: #2980b9;
+    transform: scale(1.05);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .container {
+      flex-direction: column;
+      align-items: center;
+      height: auto;
+    }
+    .community-links, .communities, .recommended-communities {
+      width: 100vw; /* Each section takes full width on small screens */
+      height: auto;
+      padding-top: 30px;
+    }
+  }
+  
+
+  /* global :  */
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Aligns content to the top */
+    width: 100vw; /* Takes full width of viewport */
+    height: 100vh; /* Takes full height of viewport */
+    padding: 0; /* Removes any padding */
+    margin: 0; /* Removes any margin */
+    gap: 0; /* Removes gap between sections */
+  }
+  
