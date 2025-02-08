@@ -23,28 +23,18 @@ const transporter = nodemailer.createTransport({
 exports.signup = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-
-    // Hash password
-    const user = new User({ username, email, password: hashedPassword });
-
+    const user = new User({ username, email, password });
     await user.save();
     res.status(201).json({ message: 'User registered successfully!' });
   } catch (error) {
     res.status(500).json({ message: 'Signup failed', error });
   }
 };
-
-/**
- * User Login
- */
-
-
 exports.login = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found' });
-    console.log(password)
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -120,15 +110,26 @@ exports.resetPassword = async (req, res) => {
 };
 
 /**
- * User Logout
+ * User Logout 
  */
 exports.logout = async (req, res) => {
   try {
-    const { token } = req.body;
-    await redisClient.setEx(`blacklist_${token}`, 3600, "blacklisted"); // Blacklist for 1 hour
-    res.json({ message: 'Logged out successfully' });
+    const authHeader = req.headers.authorization;
+    console.log("Headers received:", req.headers.authorization);
+
+    if (authHeader === undefined) {
+      return res.status(400).json({ message: "Token is missing or invalid" });
+    }
+
+    const token = authHeader.split(" ")[1]; // Extract token from "Bearer <token>"
+
+    // Store the token in Redis blacklist for 1 hour
+
+    await redisClient.setEx(`blacklist_${token}`, 3600, "blacklisted");
+
+    res.json({ message: "Logged out successfully" });
   } catch (error) {
-    res.status(500).json({ message: 'Logout failed', error });
+    res.status(500).json({ message: "Logout failed", error });
   }
 };
 
