@@ -23,7 +23,9 @@ app.use(cors());
 
 // Routes
 app.use('/user', authRoutes);
-//app.use('/api/community', communityRoutes);
+app.use("/community", require("./routes/communityRoutes"));
+app.use("/blog", require("./routes/blogRoutes"));
+app.use("/post", require("./routes/postRoutes"));
 
 // Socket.io
 require('./sockets/socketHandler')(io);
