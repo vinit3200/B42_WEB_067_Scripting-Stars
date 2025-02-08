@@ -1,14 +1,23 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BellIcon } from "@heroicons/react/24/solid";
-import "./Navbar.css"; // Import CSS file
+import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { BellIcon, MagnifyingGlassIcon, EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import "./Navbar.css";
+import EditProfile from "../Community/EditProfile";
 
-const Navbar = ({ user, setUser, setShowAuth, setShowEditProfile, setShowEditCommunity, setShowCreateCommunity }) => {
+const Navbar = ({ user, setUser, setShowAuth, setShowEditProfile }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (menuRef.current && !menuRef.current.contains(event.target)) {
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(event.target) &&
+        buttonRef.current &&
+        !buttonRef.current.contains(event.target)
+      ) {
         setMenuOpen(false);
       }
     };
@@ -17,68 +26,130 @@ const Navbar = ({ user, setUser, setShowAuth, setShowEditProfile, setShowEditCom
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleDeleteAccount = async () => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete your account? This action cannot be undone."
+    );
+    if (!confirmDelete) return;
+  
+    try {
+      const response = await fetch("https://b42-web-067-scripting-stars.onrender.com/user/delete-account", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.token}`, // ✅ Fixed Authorization format
+        },
+      });
+  
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Failed to delete account");
+      }
+  
+      alert("Your account has been deleted.");
+      localStorage.removeItem("user"); // ✅ Clear user data
+      setUser(null);
+      setShowAuth(true);
+      navigate("/login"); // ✅ Redirect to login page
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      alert("Error deleting account. Please try again.");
+    }
+    setMenuOpen(false);
+  };
+
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("https://b42-web-067-scripting-stars.onrender.com/user/logout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user?.token}`,
+        },
+        body: JSON.stringify(userData),
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to log out");
+      }
+  
+      alert("Logged out successfully.");
+      localStorage.removeItem("user"); // ✅ Clear user data
+      setUser(null);
+      setShowAuth(true);
+      navigate("/login"); // ✅ Redirect to login
+    } catch (error) {
+      console.error("Error logging out:", error);
+      alert("Error logging out. Please try again.");
+    }
+    setMenuOpen(false);
+  };
+
   return (
     <>
       {/* Main Navbar */}
-      <nav className="navbar">
+      <nav className="navbar fade-in">
         <div className="nav-brand">Unity Hub</div>
 
+        {/* Search Input with Icon */}
         <div className="search-container">
+          <MagnifyingGlassIcon className="search-icon" />
           <input type="text" placeholder="Search..." className="search-input" />
-          <button className="search-button">Search</button>
         </div>
 
-        {user ? (
-          <div className="user-profile-container">
-            <div className="user-profile">Welcome, {user.username}</div>
+        <div className="nav-right">
+          {user?.username ? (
+            <span className="welcome-message">Welcome, {user.username}!</span>
+          ) : (
+            <button className="auth-button" onClick={() => setShowAuth(true)}>
+              Register/Login
+            </button>
+          )}
 
-            <button className="notification-btn">
-              <BellIcon className="h-7 w-7 text-gray-700" />
-              <span className="notification-badge"></span>
+          {/* Notification Icon */}
+          <button className="notification-btn">
+            <BellIcon className="notification-icon" style={{ width: "30px", height: "30px", stroke: "black", strokeWidth: "2" }} />
+          </button>
+
+          {/* 3-dot menu */}
+          <div className="dropdown-container" ref={menuRef}>
+            <button 
+              ref={buttonRef}
+              className="menu-dots"
+              onClick={() => setMenuOpen((prev) => !prev)}
+            >
+              <EllipsisVerticalIcon className="dots-icon" style={{ width: "30px", height: "30px", stroke: "black", strokeWidth: "2" }} />
             </button>
 
-            <div className="dropdown" ref={menuRef}>
-              <button className="menu-dots" onClick={() => setMenuOpen(!menuOpen)}>
-                <span></span>
-                <span></span>
-                <span></span>
-              </button>
-
-              {menuOpen && (
-                <div className="dropdown-content">
-                  <button onClick={() => setShowEditProfile(true)}>Edit Profile</button>
-                  <button onClick={() => setShowEditCommunity(true)}>Edit Community Details</button>
-                  <button onClick={() => setShowCreateCommunity(true)}>Create Community</button>
-                  <button onClick={() => { /* Add delete community logic */ }}>Delete Community</button>
-                  <button onClick={() => { setUser(null); setShowAuth(false); }}>Logout</button>
-                  <button onClick={() => {
-                    if (window.confirm('Are you sure you want to delete your account? This action cannot be undone.')) {
-                      localStorage.removeItem('user');
-                      setUser(null);
-                      setShowAuth(false);
-                    }
-                  }}>Delete Account</button>
-                </div>
-              )}
-            </div>
+            {/* Dropdown menu */}
+            {menuOpen && (
+              <div className="dropdown-content">
+                <button onClick={() => { setShowEditProfile(true); setMenuOpen(false); }}>
+                  Edit Profile
+                </button>
+                <button onClick={handleDeleteAccount} className="delete-account-btn">
+                  Delete Account
+                </button>
+                <button onClick={handleLogout}>
+                  Logout
+                </button>
+              </div>
+            )}
           </div>
-        ) : (
-          <button className="auth-button" onClick={() => setShowAuth(!showAuth)}>
-            Register/Login
-          </button>
-        )}
+        </div>
       </nav>
 
-      {/* Niche Navbar */}
+      {/* Niche Navbar (SCROLLABLE) */}
       <nav className="niche-navbar">
         <div className="niche-scroll">
-          {[
-            "Technology & Innovation", "Health & Fitness", "Arts & Entertainment", "Literature & Writing",
-            "Business & Finance", "Science & Education", "Gaming", "Hobbies & Crafts",
-            "Lifestyle & Relationships", "Social Causes & Activism", "Automotive & Transportation",
-            "Food & Beverage", "Spirituality & Religion", "Career & Professional Growth", "Miscellaneous Niches"
+          {["Technology & Innovation", "Health & Fitness", "Arts & Entertainment",
+            "Literature & Writing", "Business & Finance", "Science & Education",
+            "Gaming", "Hobbies & Crafts", "Lifestyle & Relationships",
+            "Social Causes & Activism", "Automotive & Transportation",
+            "Food & Beverage", "Spirituality & Religion",
+            "Career & Professional Growth", "Miscellaneous Niches"
           ].map((niche, index) => (
-            <button key={index} className="niche-item">{niche}</button>
+            <button key={index} className="niche-item slide-up">{niche}</button>
           ))}
         </div>
       </nav>

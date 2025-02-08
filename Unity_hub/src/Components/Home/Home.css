@@ -1,0 +1,144 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  margin-top: 80px;
+  width: 100%;
+  height: 100%;
+  overflow-x: scroll; /* Prevents horizontal scrolling */
+}
+
+.home-layout-t {
+  display: grid;
+  gap: 20px;
+  min-height: 100vh;
+  padding: 20px;
+  /* background: linear-gradient(135deg, #ff9a9e, #fad0c4); Vibrant Gradient */
+  font-family: 'Arial', sans-serif;
+
+  /* Three equal columns layout */
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: auto;
+}
+
+/* Section Styles */
+.community-links-t,
+.communities-t,
+.recommended-t {
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  min-height: 450px;
+}
+
+/* Background Colors for Distinction */
+.community-links-t { 
+  background-color: #f2f2f2; 
+  padding: 20%
+}
+.communities-t { 
+  background-color: #e6e6e6;
+  
+ }
+.recommended-t { background-color: #d9d9d9; }
+
+/* Community Grid */
+.communities-grid-t {
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* Community Card */
+.community-card-t {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  text-align: center;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.community-card-t:hover {
+  transform: scale(1.03);
+}
+
+.community-card-t img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* Button Styling */
+button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Title Styling */
+.community-links-t h2,
+.communities-t h2,
+.recommended-t h2 {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  font-size: 18px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  .home-layout-t {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      "links communities"
+      "recommended communities";
+  }
+
+  .community-links-t { grid-area: links; }
+  .communities-t { grid-area: communities; }
+  .recommended-t { grid-area: recommended; }
+}
+
+@media screen and (max-width: 768px) {
+  .home-layout-t {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "links"
+      "communities"
+      "recommended";
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .communities-grid-t {
+    grid-template-columns: 1fr;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+  }
+}

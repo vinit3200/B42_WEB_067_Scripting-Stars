@@ -42,8 +42,8 @@ const RegistrationForm = ({ setUser }) => {
             if (res.ok) {
                 const result = await res.json();
                 alert(`${isSignIn ? "Login" : "Signup"} successful!`);
-                setUser(result);  // Update user state
-                navigate("/"); // Redirect to home
+                setUser(result);  
+                navigate("/"); 
             } else {
                 alert("Login Failed. Try Again.");
             }
