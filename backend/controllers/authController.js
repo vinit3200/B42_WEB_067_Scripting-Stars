@@ -136,13 +136,33 @@ exports.logout = async (req, res) => {
 /**
  * Delete Account
  */
+
 exports.deleteAccount = async (req, res) => {
   try {
-    const { email } = req.body;
-    const user = await User.findOneAndDelete({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
-    res.json({ message: 'Account deleted successfully' });
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return res.status(400).json({ message: "Token is missing or invalid" });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    // ✅ Decode the token to extract `userId`
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId; // Extracted from token payload
+    
+
+    console.log("Deleting user with ID:", userId);
+
+    const user = await User.findByIdAndDelete(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // ✅ Optional: Blacklist token after account deletion
+    await redisClient.setEx(`blacklist_${token}`, 3600, "blacklisted");
+
+    res.json({ message: "Account deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: 'Error deleting account', error });
+    console.error("Error deleting account:", error);
+    res.status(500).json({ message: "Error deleting account", error: error.message });
   }
 };
