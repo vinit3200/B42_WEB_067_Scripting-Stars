@@ -37,7 +37,7 @@ my-app/
 └─ README.md
 
 ## Video Walkthrough of the project
-https://youtu.be/9UkifRYc7EE
+https://youtu.be/-dX_yK5HMFw
 
 ## Video Walkthrough of the codebase
 https://youtu.be/9UkifRYc7EE
@@ -163,8 +163,8 @@ Socket.io is used for real-time post and comment updates.
 - dotenv for environment variable management
 - nodemon for development server auto-restarts
 
-# Screen Shots:
-![Login/Register page-]("(https://github.com/vinit3200/B42_WEB_067_Scripting-Stars/blob/main/WhatsApp%20Image%202025-02-10%20at%2012.11.25_3f4a4e2d.jpg)")
-![Home page-]("C:\Users\vaibhav\Desktop\home page.jpg")
-![Create community page-]("C:\Users\vaibhav\Desktop\create community page.jpg")
+# ScreenShots:
+![Login/SignUp page-](C:\Users\thods\Downloads\login.png)
+![Create Community](C:\Users\thods\Downloads\createcommunity.png)
+![Home Page](C:\Users\thods\Downloads\Ui.png)
 
