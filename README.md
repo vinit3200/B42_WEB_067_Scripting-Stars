@@ -193,6 +193,6 @@ Socket.io is used for real-time post and comment updates.
 
 ## ScreenShots:
 
-![Login/SignUp page](images/login.png)
-![Create Community](images/createcommunity.png)
-![Home Page](images/Ui.png)
+![Login/SignUp page](./Unity_hub/images/login.png)
+![Create Community](./Unity_hub/images/createcommunity.png)
+![Home Page](./Unity_hub/images/Ui.png)
