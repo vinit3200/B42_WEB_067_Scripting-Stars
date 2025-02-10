@@ -164,7 +164,7 @@ Socket.io is used for real-time post and comment updates.
 - nodemon for development server auto-restarts
 
 # Screen Shots:
-![My App Screenshot]("C:\Users\vaibhav\Desktop\login image.jpg")
-![My App Screenshot]("C:\Users\vaibhav\Desktop\home page.jpg")
-![My App Screenshot]("C:\Users\vaibhav\Desktop\create community page.jpg")
+![Login/Register page]("C:\Users\vaibhav\Desktop\login image.jpg")
+![Home page]("C:\Users\vaibhav\Desktop\home page.jpg")
+![Create community page]("C:\Users\vaibhav\Desktop\create community page.jpg")
 
