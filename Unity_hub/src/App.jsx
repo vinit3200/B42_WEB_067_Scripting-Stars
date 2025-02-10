@@ -3,7 +3,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 import Home from "./Components/Home/Home";
 import RegistrationForm from "./Components/Login/Login";
-import EditProfile from "./Components/Community/EditProfile"; // ✅ Ensure correct import path
+import EditProfile from "./Components/Community/EditProfile"; 
+import Footer from "./Components/Footer/Footer";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -11,6 +12,7 @@ function App() {
   const [showEditProfile, setShowEditProfile] = useState(false); // ✅ Added state
 
   return (
+    <>
     <BrowserRouter>
       <Navbar user={user} setUser={setUser} setShowEditProfile={setShowEditProfile} />
 
@@ -41,6 +43,9 @@ function App() {
         </div>
       )}
     </BrowserRouter>
+    <Footer/>
+    </>
+    
   );
 }
 
