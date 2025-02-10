@@ -105,7 +105,7 @@ const RegistrationForm = ({ setUser }) => {
                                     <label htmlFor="password"></label>
                                     <input
                                         type={passwordVisible ? "text" : "password"}
-                                        placeholder="***"
+                                        placeholder="*******"
                                         name="password"
                                         value={data.password}
                                         onChange={handleChange}

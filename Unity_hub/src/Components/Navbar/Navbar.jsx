@@ -9,6 +9,9 @@ const Navbar = ({ user, setUser, setShowAuth, setShowEditProfile }) => {
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const navigate = useNavigate(); // Initialize useNavigate
+  const [searchQuery, setSearchQuery] = useState("");
+  const [results, setResults] = useState([]);
+  const [showResults, setShowResults] = useState(false);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -58,6 +61,27 @@ const Navbar = ({ user, setUser, setShowAuth, setShowEditProfile }) => {
     setMenuOpen(false);
   };
 
+  const handleSearch = async (query) => {
+    setSearchQuery(query);
+    if (query.length < 2) {
+      setResults([]); // Clear results if query is too short
+      setShowResults(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`https://b42-web-067-scripting-stars.onrender.com/user/search?name=${query}`);
+      if (!response.ok) throw new Error("No results found");
+
+      const data = await response.json();
+      setResults(data);
+      setShowResults(true);
+    } catch (error) {
+      setResults([]);
+      setShowResults(false);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       const response = await fetch("https://b42-web-067-scripting-stars.onrender.com/user/logout", {
@@ -93,9 +117,31 @@ const Navbar = ({ user, setUser, setShowAuth, setShowEditProfile }) => {
 
         {/* Search Input with Icon */}
         <div className="search-container">
-          <MagnifyingGlassIcon className="search-icon" />
-          <input type="text" placeholder="Search..." className="search-input" />
+      {/* <div className="search-bar"> */}
+        <input
+        
+          type="text"
+          placeholder="Search....."
+          className="search-input"
+          value={searchQuery}
+          onChange={(e) => handleSearch(e.target.value)}
+        />
+        <MagnifyingGlassIcon className="search-icon" />
+      {/* </div> */}
+
+      {showResults && results.length > 0 && (
+        <div className="search-results">
+          {results.map((community) => (
+            <div key={community._id} className="search-result-item">
+              <img src={community.profilePicture} alt="Profile" className="search-profile-pic" />
+              <span>{community.name}</span>
+            </div>
+          ))}
         </div>
+      )}
+    </div>
+  
+
 
         <div className="nav-right">
           {user?.username ? (
