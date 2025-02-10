@@ -164,7 +164,7 @@ Socket.io is used for real-time post and comment updates.
 - nodemon for development server auto-restarts
 
 # Screen Shots:
-![Login/Register page-]("WhatsApp Image 2025-02-10 at 12.11.25_3f4a4e2d.jpg")
+![Login/Register page-]("(https://github.com/vinit3200/B42_WEB_067_Scripting-Stars/blob/main/WhatsApp%20Image%202025-02-10%20at%2012.11.25_3f4a4e2d.jpg)")
 ![Home page-]("C:\Users\vaibhav\Desktop\home page.jpg")
 ![Create community page-]("C:\Users\vaibhav\Desktop\create community page.jpg")
 
