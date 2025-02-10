@@ -3,6 +3,8 @@
 ## Introduction
 The Unity-hub Platform is a dynamic web application designed to connect users based on their interests. It allows users to join niche communities, participate in real-time discussions, and receive personalized content recommendations. The platform solves the problem of fragmented online communities by providing a centralized, interactive, and user-friendly space for like-minded individuals.
 
+---
+
 ## Project Type
 Fullstack
 
@@ -10,6 +12,8 @@ Fullstack
 Frontend: http://unity-hub.netlify.app
 Backend: https://b42-web-067-scripting-stars.onrender.com/
 Database: mongodb+srv://cyber:good797@database.fuqlu.mongodb.net/B42_067?retryWrites=true&w=majority
+
+---
 
 ## Directory Structure
 my-app/ 
@@ -36,6 +40,8 @@ my-app/
 ├─ package.json 
 └─ README.md
 
+---
+
 ## Video Walkthrough of the project
 https://youtu.be/-dX_yK5HMFw
 
@@ -47,6 +53,8 @@ https://youtu.be/9UkifRYc7EE
 - **Real-Time Discussions:** Live discussion boards with real-time updates using WebSockets.
 - **Community Management:** Create, join, and manage niche communities.
 - **Reactions and Engagement:** like,posts and comments.
+
+---
 
 ## design decisions or assumptions
 - Responsive Design:
@@ -64,6 +72,8 @@ Well-structured navigation with clearly defined menus and sections for quick acc
 
 - Real-Time Updates:
 Integration with real-time data feeds (via WebSockets or Socket.io) ensures that users receive instant updates for new posts, comments, and notifications without needing to refresh the page.
+
+---
 
 ## Installation & Getting started
 Follow these steps to set up the project locally:
@@ -96,6 +106,7 @@ Frontend:
 
 5. Access the Application: Open your browser and navigate to http://localhost:5173/ for the frontend.
 
+---
 
 ## Usage
 After logging in, you can:
@@ -105,6 +116,8 @@ After logging in, you can:
 -Comment & React: Engage in discussions with threaded comments and reaction features.
 -Customize Feed: Adjust settings to personalize your content feed.
 
+---
+
 ## Example:
 # Register a new user
 Visit http://localhost:3000/signup and complete the registration form.
@@ -113,16 +126,22 @@ Visit http://localhost:3000/login and use your credentials to log in.
 # Explore Communities
 Browse the dashboard to join communities of interest and start interacting.
 
+---
+
 ## Credentials
 Use the following test credentials to access authenticated pages:
 Username: sakshi
 Email: sakshi1701@gmail.com
 Password: sakshi1701 
 
+---
+
 ## APIs Used
 This application utilizes the following external APIs:
 -Email Service API: For sending account verification and notification emails.
 -AI Recommendation API (Optional): To provide personalized community recommendations based on user activity.
+
+---
 
 ## API Endpoints
 Below is a list of key API endpoints provided by the backend:
@@ -143,6 +162,7 @@ POST /api/posts/:id/comments - Add a comment to a post.
 Real-Time Updates:
 Socket.io is used for real-time post and comment updates.
 
+---
 
 ## Technology Stack
 # Frontend:
@@ -163,8 +183,16 @@ Socket.io is used for real-time post and comment updates.
 - dotenv for environment variable management
 - nodemon for development server auto-restarts
 
-# ScreenShots:
-![Login/SignUp page-](C:\Users\thods\Downloads\login.png)
-![Create Community](C:\Users\thods\Downloads\createcommunity.png)
-![Home Page](C:\Users\thods\Downloads\Ui.png)
+---
 
+## Project Credits:
+
+1) Sakshi Thodsare - ft38_328
+2) Rajan Gupta - ft38_461
+3) vaibhav Battise
+
+## ScreenShots:
+
+![Login/SignUp page](images/login.png)
+![Create Community](images/createcommunity.png)
+![Home Page](images/Ui.png)
