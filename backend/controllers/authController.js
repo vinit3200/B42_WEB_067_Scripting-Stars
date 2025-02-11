@@ -44,6 +44,38 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.updatePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body;
+    const authHeader = req.headers.authorization;
+
+    if (!authHeader) {
+      return res.status(400).json({ message: "Token is missing or invalid" });
+    }
+
+    const token = authHeader.split(" ")[1]; // Extract token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId; // Extract user ID from token
+
+    const user = await User.findById(userId);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    // Compare current password with hashed password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) return res.status(400).json({ message: "Incorrect current password" });
+
+    // Hash and update new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    res.json({ message: "Password updated successfully" });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ message: "Error updating password", error: error.message });
+  }
+};
+
 
 /**
  * Forgot Password - Send OTP via Email
