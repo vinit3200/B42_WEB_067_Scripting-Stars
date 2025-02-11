@@ -51,35 +51,61 @@ exports.login = async (req, res) => {
 exports.forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found' });
+    console.log(`Received password reset request for: ${email}`);
 
-    // Check rate limit (Prevent OTP spam)
-    console.log("checking Radis connection...")
+    // Check if user exists in MongoDB
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("User not found in DB");
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check Redis Connection
+    console.log("Checking Redis connection...");
+    try {
+      await redisClient.ping();
+    } catch (err) {
+      console.error("Redis connection failed:", err);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+
+    // Rate limiting (Prevent OTP spam)
     const lastOtpTime = await redisClient.get(`otp_time_${email}`);
-    console.log("lastOtpTime: ", lastOtpTime)
+    console.log("Last OTP Request Time:", lastOtpTime);
     if (lastOtpTime && Date.now() - lastOtpTime < 2 * 60 * 1000) {
-      return res.status(429).json({ message: 'OTP request limit exceeded. Try again later.' });
+      console.log("OTP request rate limit exceeded");
+      return res
+        .status(429)
+        .json({ message: "OTP request limit exceeded. Try again later." });
     }
 
     // Generate OTP
-    const otp = otpGenerator.generate(6, { digits: true, alphabets: false, upperCase: false });
+    const otp = otpGenerator.generate(6, {
+      digits: true,
+      alphabets: false,
+      upperCase: false,
+    });
+    console.log(`Generated OTP for ${email}:`, otp);
 
-    // Store OTP in Redis with expiry (10 minutes)
+    // Store OTP in Redis with expiry (10 min)
     await redisClient.setEx(`otp_${email}`, 600, otp); // Expire in 10 min
-    await redisClient.setEx(`otp_time_${email}`, 120, Date.now()); // Prevent spam (2 min)
-
+    await redisClient.setEx(`otp_time_${email}`, 120, Date.now().toString()); // Prevent spam (2 min)
+    
     // Send OTP via Email
+    console.log("Sending OTP email...");
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+      from: process.env.EMAIL_USER, 
       to: email,
-      subject: 'Password Reset OTP',
+      subject: "Password Reset OTP",
       text: `Your OTP for password reset is: ${otp}. It is valid for 10 minutes.`,
     });
 
-    res.json({ message: 'OTP sent to your email' });
+    console.log("Email sent successfully to:", email);
+    res.json({ message: "OTP sent to your email" });
+
   } catch (error) {
-    res.status(500).json({ message: 'Error sending OTP', error });
+    console.error("Error in forgot-password:", error);
+    res.status(500).json({ message: "Error sending OTP", error: error.message });
   }
 };
 
